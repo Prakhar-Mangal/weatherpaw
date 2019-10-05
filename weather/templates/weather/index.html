@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <title>PM</title>
+  </head>
+  <body>
+  <div class="container bg-primary text-white">
+  	<h1 style=" text-align: center;">Know Your City Weather Now...</h1>
+  </div>
+  <div id="ip"></div>
+<div id="address"></div>
+<!-- <hr/>Full response: <pre id="details"></pre> -->
+  <div class="container ">
+  	<form class="form-inline" method="POST">
+          {% csrf_token %}
+  <div class="form-group mx-auto mb-2">
+    <label for="inputPassword2" class="sr-only">Enter City</label>
+    {{form.name}}
+    <button type="submit" class="btn btn-dark ml-1 mu-sm-1 my-auto mb-2">Add City</button>
+  </div>
+  
+</form>
+{% if message %}
+<div class="{{message_class}}" style="text-align: center;">
+  <strong>{{message}}</strong> 
+</div>
+{% endif %}
+   <div class="container">
+   <div class="row">
+       {% for city_weather in weather_data %}
+   	 <div class="card  mx-auto" style="width: 15rem; height: 18rem">
+        <a href="{% url 'delete_city' city_weather.city %}">
+        <button type="button" class="close" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </a>
+          <img src="http://openweathermap.org/img/wn/{{city_weather.icon}}@2x.png" class="card-img-top img-thumbnail mt-2 mx-auto" alt="Responsive image" style="height: 8rem; width:8rem;">
+          <div class="card-body mx-auto">
+            <h5 class="card-title " style="text-align: center;">{{city_weather.city}}</h5>
+            <p style="text-align: center;"><strong class="card-text" >{{city_weather.tempreture}} °C</strong></p>
+            <p class="card-text" style="text-align: center;">{{city_weather.description}}</p>
+            
+          </div>
+          
+        </div>
+   	{%endfor%}
+   </div>
+   	
+   </div>
+<footer>
+  <div class="footer-copyright text-center py-3 position-relative">© 2019 Copyright:
+    <a href="#"> Mangal Pvt Ltd, Indore</a>
+  </div>
+</footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- <script>
+        $.get("http://ipinfo.io", function (response) {
+          $("#ip").html("IP: " + response.ip);
+          $("#address").html("Location: " + response.city + ", " + response.region);
+          $("#details").html(JSON.stringify(response, null, 4));
+      }, "jsonp");
+      </script> -->
+  </body>
+</html>
